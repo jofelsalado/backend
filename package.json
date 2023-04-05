@@ -15,5 +15,24 @@
   "bugs": {
     "url": "https://github.com/jofelsalado/backend/issues"
   },
-  "homepage": "https://github.com/jofelsalado/backend#readme"
+  "homepage": "https://github.com/jofelsalado/backend#readme",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
+    "helmet": "^6.0.1",
+    "hpp": "^0.2.3",
+    "jsonwebtoken": "^9.0.0",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "@types/compression": "^1.7.2",
+    "@types/express": "^4.17.17",
+    "@types/hpp": "^0.2.2",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/node": "^18.15.11",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.3"
+  }
 }

@@ -32,3 +32,23 @@ npx prisma db:push
 ** Using Yarn **
 yarn prisma db:push
 ```
+
+---
+
+Example request to end http request to server's REST API
+
+```javacsript
+import axios from 'axios'
+
+const http = axios.create({
+  baseURL: 'http://localhost:5555/api'
+})
+
+http.get('/healthcheck')
+.then(response => {
+  console.log(response)
+})
+.catch(error => {
+  console.log(error)
+})
+```

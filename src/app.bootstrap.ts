@@ -1,8 +1,9 @@
-import { Application, Request, Response, RequestHandler } from "express";
+import express, { Application, Request, Response } from "express";
 import helmet from "helmet";
 import hpp from "hpp";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
+import cors from "cors";
 import * as dotenv from "dotenv";
 import { initializeApiRoutes } from "@/src/router/index";
 
@@ -14,6 +15,8 @@ const RATE_LIMIT_CONFIG = {
 };
 
 export default function (app: Application) {
+	app.use(express.json());
+	app.use(cors());
 	app.use(helmet());
 	app.use(hpp());
 	app.use(rateLimit(RATE_LIMIT_CONFIG));

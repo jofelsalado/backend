@@ -1,9 +1,11 @@
-import { Application } from "express";
+import { Application, Request, Response, RequestHandler } from "express";
 import helmet from "helmet";
 import hpp from "hpp";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
 import * as dotenv from "dotenv";
+import { initializeApiRoutes } from "@/src/router/index";
+
 dotenv.config();
 
 const RATE_LIMIT_CONFIG = {
@@ -20,8 +22,16 @@ export default function (app: Application) {
 
 	/**
 	 * API Healthcheck
+	 *
+	 * @param request
+	 * @param response
 	 */
-	app.get("/", (request, response) => response.status(200).json({ status: "SERVER-ONLINE" }));
+	app.get("/", (request: Request, response: Response) => response.status(200).json({ status: "SERVER-ONLINE" }));
+
+	/**
+	 * API endpoints per module
+	 */
+	initializeApiRoutes(app);
 
 	/**
 	 * Start server

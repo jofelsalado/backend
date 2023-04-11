@@ -3,7 +3,7 @@ import { Application } from "express";
 /**
  * Module Routers
  */
-import AuthRouter from "@/src/modules/auth/auth.router";
+import AuthRouter from "./../modules/auth/auth.router";
 
 const ROUTER = {
 	$auth: new AuthRouter(),

@@ -5,7 +5,7 @@ import rateLimit from "express-rate-limit";
 import compression from "compression";
 import cors from "cors";
 import * as dotenv from "dotenv";
-import { initializeApiRoutes } from "@/src/router/index";
+import { initializeApiRoutes } from "./router/index";
 
 dotenv.config();
 
@@ -29,7 +29,9 @@ export default function (app: Application) {
 	 * @param request
 	 * @param response
 	 */
-	app.get("/", (request: Request, response: Response) => response.status(200).json({ status: "SERVER-ONLINE" }));
+	app.get("/", (request: Request, response: Response) =>
+		response.status(200).json({ status: "SERVER-ONLINE" })
+	);
 
 	/**
 	 * API endpoints per module
@@ -40,6 +42,8 @@ export default function (app: Application) {
 	 * Start server
 	 */
 	app.listen(process.env.APP_PORT, () => {
-		console.log("[APP]: App running in http://localhost:" + process.env.APP_PORT);
+		console.log(
+			"[APP]: App running in http://localhost:" + process.env.APP_PORT
+		);
 	});
 }

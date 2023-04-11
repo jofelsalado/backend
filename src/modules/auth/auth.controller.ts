@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
 import AuthService from "./auth.service";
 import { CredentialsDTO } from "./auth.dto";
-import { validateDTO } from "@/src/utilities/dto-validator.util";
+import { validateDTO } from "./../../utilities/dto-validator.util";
 
 export default class AuthController {
-	public authService: any;
+	private authService;
 
 	constructor() {
 		this.authService = new AuthService();
 	}
 
-	public async loginHandler(request: Request, response: Response) {
+	public loginHandler = async (request: Request, response: Response) => {
 		try {
 			const requestValidated = await validateDTO(CredentialsDTO, request.body);
 
@@ -31,7 +31,7 @@ export default class AuthController {
 			console.log(error);
 			return response.status(500).json({ code: 500 });
 		}
-	}
+	};
 
 	public logoutHandler(request: Request, response: Response) {
 		try {

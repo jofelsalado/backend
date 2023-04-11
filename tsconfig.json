@@ -8,11 +8,10 @@
 		"esModuleInterop": true,
 		"noImplicitAny": true,
 		"experimentalDecorators": true,
-		"strictPropertyInitialization": false,
-		"baseUrl": ".",
-		"paths": {
-			"@/src/*": ["./src/*"]
-		}
+		"strictPropertyInitialization": false
 	},
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules"],
+	"ts-node": {
+		"require": ["tsconfig-paths/register"]
+	}
 }

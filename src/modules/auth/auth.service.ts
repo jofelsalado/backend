@@ -1,6 +1,6 @@
-import PrismaService from "@/src/services/prisma.service";
-import JWTService from "@/src/services/jwt.service";
-import { verifyPassword } from "@/src/utilities/password.util";
+import PrismaService from "./../../services/prisma.service";
+import JWTService from "./../../services/jwt.service";
+import { verifyPassword } from "./../../utilities/password.util";
 import { CredentialsDTO } from "./auth.dto";
 
 export default class AuthService {
@@ -12,14 +12,12 @@ export default class AuthService {
 		this.jwtService = new JWTService();
 	}
 
-	public async login(credentials: CredentialsDTO) {
+	public login = async (credentials: CredentialsDTO) => {
 		const user = await this.prismaService.prisma.user.findUnique({
 			where: {
 				email: credentials.email,
 			},
 		});
-
-		console.log(user);
 
 		if (user && (await verifyPassword(credentials.password, user.password))) {
 			const accessToken = this.jwtService.createAccessToken(user);
@@ -34,5 +32,5 @@ export default class AuthService {
 		return {
 			isAuthSuccess: false,
 		};
-	}
+	};
 }

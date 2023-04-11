@@ -47,6 +47,7 @@ export default class App {
 
 		/**
 		 * API endpoints (by module)
+		 * @param express
 		 */
 		initializeApiRoutes(this.express);
 	}

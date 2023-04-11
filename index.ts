@@ -1,8 +1,9 @@
 import express from "express";
-import bootstrapApplication from "./src/app.bootstrap";
+import App from "./src/app.bootstrap";
 
 try {
-	bootstrapApplication(express());
+	const mainApp = new App();
+	mainApp.runApp();
 } catch (error) {
 	process.exit(1);
 }

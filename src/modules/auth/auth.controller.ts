@@ -33,10 +33,10 @@ export default class AuthController {
 		}
 	};
 
-	public logoutHandler(request: Request, response: Response) {
+	public logoutHandler = async (request: Request, response: Response) => {
 		try {
 		} catch (error) {
 			return response.status(500).json({ code: 500, error });
 		}
-	}
+	};
 }

@@ -14,36 +14,48 @@ const RATE_LIMIT_CONFIG = {
 	max: 100,
 };
 
-export default function (app: Application) {
-	app.use(express.json());
-	app.use(cors());
-	app.use(helmet());
-	app.use(hpp());
-	app.use(rateLimit(RATE_LIMIT_CONFIG));
-	app.use(compression());
-	app.disable("x-powered-by");
+export default class App {
+	public express: Application;
 
-	/**
-	 * API Healthcheck
-	 *
-	 * @param request
-	 * @param response
-	 */
-	app.get("/", (request: Request, response: Response) =>
-		response.status(200).json({ status: "SERVER-ONLINE" })
-	);
+	constructor() {
+		this.express = express();
+		this.setupApp();
+	}
 
-	/**
-	 * API endpoints per module
-	 */
-	initializeApiRoutes(app);
+	private setupApp() {
+		this.express.use(express.json());
+		this.express.use(cors());
+		this.express.use(helmet());
+		this.express.use(hpp());
+		this.express.use(rateLimit(RATE_LIMIT_CONFIG));
+		this.express.use(compression());
+		this.express.disable("x-powered-by");
 
-	/**
-	 * Start server
-	 */
-	app.listen(process.env.APP_PORT, () => {
-		console.log(
-			"[APP]: App running in http://localhost:" + process.env.APP_PORT
+		this.setupRoutes();
+	}
+
+	private setupRoutes() {
+		/**
+		 * API Healthcheck
+		 *
+		 * @param request
+		 * @param response
+		 */
+		this.express.get("/", (request: Request, response: Response) =>
+			response.status(200).json({ status: "SERVER-ONLINE" })
 		);
-	});
+
+		/**
+		 * API endpoints (by module)
+		 */
+		initializeApiRoutes(this.express);
+	}
+
+	public runApp() {
+		this.express.listen(process.env.APP_PORT, () => {
+			console.log(
+				"[APP]: App running in http://localhost:" + process.env.APP_PORT
+			);
+		});
+	}
 }

@@ -20,28 +20,29 @@ model UserType {
 }
 
 model User {
-  id               Int                @id @unique @default(autoincrement())
-  accountNo        String             @unique
-  avatarImage      String
-  firstName        String
-  middleName       String?
-  lastName         String
-  gender           String
-  contactNo        String
-  address          String             @db.Text
-  birthdate        String
-  email            String             @unique
-  username         String             @unique
-  password         String
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  userTypeId       Int
-  userType         UserType           @relation(references: [id], fields: [userTypeId])
-  userJWTBlacklist UserJWTBlacklist[]
-  leadId           Int?
-  lead             Lead?
-  adviserId        Int?
-  adviser          Adviser?
+  id                Int                 @id @unique @default(autoincrement())
+  accountNo         String              @unique
+  avatarImage       String
+  firstName         String
+  middleName        String?
+  lastName          String
+  gender            String
+  contactNo         String
+  address           String              @db.Text
+  birthdate         String
+  email             String              @unique
+  username          String              @unique
+  password          String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  userTypeId        Int
+  userType          UserType            @relation(references: [id], fields: [userTypeId])
+  userJWTBlacklist  UserJWTBlacklist[]
+  leadId            Int?
+  lead              Lead?
+  adviserId         Int?
+  adviser           Adviser?
+  adminManageReport AdminManageReport[]
 
   @@index([id, userTypeId, leadId])
 }
@@ -58,38 +59,46 @@ model UserJWTBlacklist {
 }
 
 model Adviser {
-  id        Int       @id @unique @default(autoincrement())
-  roleId    Int
-  rating    String
-  company   String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  userId    Int       @unique
-  user      User      @relation(references: [id], fields: [userId])
-  products  Product[]
+  id                         Int                          @id @unique @default(autoincrement())
+  roleId                     Int
+  rating                     String
+  company                    String
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
+  userId                     Int                          @unique
+  user                       User                         @relation(references: [id], fields: [userId])
+  products                   Product[]
+  adviserComplaintReport     AdviserComplaintReport[]
+  adviserConsultationHistory AdviserConsultationHistory[]
+  adviserNotification        AdviserNotification[]
 
   @@index([id, userId])
 }
 
 model Lead {
-  id                Int                @id @unique @default(autoincrement())
-  roleId            Int
-  rating            String
-  company           String
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
-  userId            Int                @unique
-  user              User               @relation(references: [id], fields: [userId])
-  leadNotifications LeadNotification[]
+  id                        Int                         @id @unique @default(autoincrement())
+  roleId                    Int
+  rating                    String
+  company                   String
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  userId                    Int                         @unique
+  user                      User                        @relation(references: [id], fields: [userId])
+  leadNotification          LeadNotification[]
+  adviserManageConsultation AdviserManageConsultation[]
+  leadInquiry               LeadInquiry[]
+  leadConsultaionHistory    LeadConsultationHistory[]
+  leadComplaintReport       LeadComplaintReport[]
 
   @@index([id, userId])
 }
 
 model LeadInquiry {
   id        Int      @id @unique @default(autoincrement())
-  roleId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  leadId    Int
+  lead      Lead     @relation(references: [id], fields: [leadId])
   productId Int
   product   Product  @relation(references: [id], fields: [productId])
 
@@ -97,30 +106,138 @@ model LeadInquiry {
 }
 
 model LeadNotification {
-  id         Int    @id @unique @default(autoincrement())
-  reportType String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  leadId    Int
-  lead      Lead     @relation(references: [id], fields: [leadId])
+  id                    Int                 @id @unique @default(autoincrement())
+  reportType            String
+  time                  String
+  status                String
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  leadId                Int
+  lead                  Lead                @relation(references: [id], fields: [leadId])
+  leadComplaintReportId Int
+  leadComplaintReport   LeadComplaintReport @relation(fields: [leadComplaintReportId], references: [id])
 
   @@index([id, leadId])
 }
 
+model LeadComplaintReport {
+  id               Int                @id @unique @default(autoincrement())
+  name             String
+  description      String
+  reportDate       DateTime
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  leadId           Int
+  lead             Lead               @relation(references: [id], fields: [leadId])
+  leadNotification LeadNotification[]
+
+  @@index([leadId])
+}
+
+model LeadConsultationHistory {
+  id          Int      @id @unique @default(autoincrement())
+  company     String
+  meetingType String
+  adviserName String
+  type        String
+  fee         String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  leadId      Int
+  lead        Lead     @relation(references: [id], fields: [leadId])
+  productId   Int
+  product     Product  @relation(references: [id], fields: [productId])
+
+  @@index([leadId, productId])
+}
+
 model Product {
-  id            Int           @id @unique @default(autoincrement())
-  sku           String        @unique
-  name          String        @unique
-  description   String        @db.LongText
-  type          String
-  quotation     String
-  status        String
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  adviserId     Int
-  adviser       Adviser       @relation(references: [id], fields: [adviserId])
-  leadInquiries LeadInquiry[]
+  id                         Int                          @id @unique @default(autoincrement())
+  sku                        String                       @unique
+  name                       String                       @unique
+  description                String                       @db.LongText
+  type                       String
+  quotation                  String
+  status                     String
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
+  adviserId                  Int
+  adviser                    Adviser                      @relation(references: [id], fields: [adviserId])
+  leadInquiry                LeadInquiry[]
+  adviserManageConsultation  AdviserManageConsultation[]
+  leadConsultaionHistory     LeadConsultationHistory[]
+  adviserConsultationHistory AdviserConsultationHistory[]
 
   @@index([adviserId])
+}
+
+model AdviserManageConsultation {
+  id          Int      @id @unique @default(autoincrement())
+  type        String
+  meetingType String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  productId   Int
+  product     Product  @relation(references: [id], fields: [productId])
+  leadId      Int
+  lead        Lead     @relation(references: [id], fields: [leadId])
+
+  @@index([productId, leadId])
+}
+
+model AdviserComplaintReport {
+  id                  Int                   @id @unique @default(autoincrement())
+  name                String
+  description         String
+  reportDate          DateTime
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  adviserId           Int
+  adviser             Adviser               @relation(references: [id], fields: [adviserId])
+  adviserNotification AdviserNotification[]
+
+  @@index([adviserId])
+}
+
+model AdviserConsultationHistory {
+  id          Int      @id @unique @default(autoincrement())
+  company     String
+  meetingType String
+  adviserName String
+  type        String
+  fee         String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  adviserId   Int
+  adviser     Adviser  @relation(references: [id], fields: [adviserId])
+  productId   Int
+  product     Product  @relation(references: [id], fields: [productId])
+
+  @@index([adviserId, productId])
+}
+
+model AdviserNotification {
+  id                       Int                    @id @unique @default(autoincrement())
+  reportType               String
+  time                     String
+  status                   String
+  createdAt                DateTime               @default(now())
+  updatedAt                DateTime               @updatedAt
+  adviserId                Int
+  adviser                  Adviser                @relation(references: [id], fields: [adviserId])
+  adviserComplaintReportId Int
+  adviserComplaintReport   AdviserComplaintReport @relation(fields: [adviserComplaintReportId], references: [id])
+
+  @@index([id, adviserId, adviserComplaintReportId])
+}
+
+model AdminManageReport {
+  id          Int      @id @unique @default(autoincrement())
+  name        String   @unique
+  description String   @db.Text
+  reportDate  DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
 }

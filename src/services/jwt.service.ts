@@ -10,13 +10,25 @@ export default class JWTService {
 		});
 	};
 
+	public revokeAccessToken = (authToken: string) => {
+		//
+	};
+
 	public verifyAccessToken = (authToken: string): any => {
 		return jwt.verify(authToken, this.JWT_KEY, (err, user) => {
 			if (err) {
-				return err;
+				return {
+					isValid: false,
+				};
 			}
 
-			return user;
+			return {
+				isValid: true,
+			};
 		});
+	};
+
+	public decodeAccessToken = (authToken: string): any => {
+		//
 	};
 }

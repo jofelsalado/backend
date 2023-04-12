@@ -28,13 +28,13 @@ export default class AuthController {
 				.status(200)
 				.json({ status: "AUTH_LOGIN_SUCCESS", ...data });
 		} catch (error) {
-			console.log(error);
 			return response.status(500).json({ code: 500 });
 		}
 	};
 
 	public logoutHandler = async (request: Request, response: Response) => {
 		try {
+			return response.status(204).send();
 		} catch (error) {
 			return response.status(500).json({ code: 500, error });
 		}

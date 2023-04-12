@@ -17,20 +17,33 @@ export default class AuthService {
 			where: {
 				email: credentials.email,
 			},
+			include: {
+				userType: true,
+			},
 		});
 
 		if (user && (await verifyPassword(credentials.password, user.password))) {
 			const accessToken = this.jwtService.createAccessToken(user);
 
+			/**
+			 * Hide/Remove password in user data
+			 */
+			// @ts-ignore
+			delete user["password"];
+
 			return {
 				isAuthSuccess: true,
-				user,
 				accessToken,
+				user,
 			};
 		}
 
 		return {
 			isAuthSuccess: false,
 		};
+	};
+
+	public logout = async (authToken: string) => {
+		console.log(authToken);
 	};
 }

@@ -8,13 +8,13 @@ export const requireAuthMiddleware = (
 	response: Response,
 	next: NextFunction
 ) => {
-	const authToken = request.headers.authorization;
+	const authHeader = request.headers.authorization;
 
-	if (typeof authToken === "undefined") {
+	if (typeof authHeader === "undefined") {
 		return response.status(401).json({ message: "AUTH_UNAUTHORIZED_ACCESS" });
 	}
 
-	if (!jwtService.verifyAccessToken(authToken.split(" ")[1]).isValid) {
+	if (!jwtService.verifyAccessToken(authHeader.split(" ")[1]).isValid) {
 		return response.status(403).json({ message: "AUTH_FORBIDDEN_ACCESS" });
 	}
 

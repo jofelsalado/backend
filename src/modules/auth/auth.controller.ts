@@ -24,11 +24,9 @@ export default class AuthController {
 				return response.status(401).json({ status: "AUTH_LOGIN_FAILED" });
 			}
 
-			return response
-				.status(200)
-				.json({ status: "AUTH_LOGIN_SUCCESS", ...data });
+			return response.status(200).json({ status: "AUTH_LOGIN_SUCCESS", ...data });
 		} catch (error) {
-			return response.status(500).json({ code: 500 });
+			return response.status(500).json({ message: "INTERNAL_SERVER_ERROR" });
 		}
 	};
 

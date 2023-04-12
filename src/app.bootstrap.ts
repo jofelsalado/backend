@@ -52,11 +52,13 @@ export default class App {
 		initializeApiRoutes(this.express);
 	}
 
+	private setupLogging() {
+		//
+	}
+
 	public runApp() {
 		this.express.listen(process.env.APP_PORT, () => {
-			console.log(
-				"[APP]: App running in http://localhost:" + process.env.APP_PORT
-			);
+			console.log("[APP]: App running in http://localhost:" + process.env.APP_PORT);
 		});
 	}
 }

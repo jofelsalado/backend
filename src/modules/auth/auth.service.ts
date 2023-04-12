@@ -23,13 +23,9 @@ export default class AuthService {
 		});
 
 		if (user && (await verifyPassword(credentials.password, user.password))) {
-			const accessToken = this.jwtService.createAccessToken(user);
-
-			/**
-			 * Hide/Remove password in user data
-			 */
 			// @ts-ignore
 			delete user["password"];
+			const accessToken = this.jwtService.createAccessToken(user);
 
 			return {
 				isAuthSuccess: true,

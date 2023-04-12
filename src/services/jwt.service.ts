@@ -13,6 +13,7 @@ export default class JWTService {
 	public createAccessToken = (payload: any): string => {
 		return jwt.sign(payload, this.JWT_KEY, {
 			expiresIn: "2d",
+			algorithm: "HS256",
 		});
 	};
 
@@ -31,6 +32,7 @@ export default class JWTService {
 	public verifyAccessToken = (authToken: string): any => {
 		return jwt.verify(authToken, this.JWT_KEY, (err, user) => {
 			if (err) {
+				console.log(err);
 				return {
 					isValid: false,
 				};

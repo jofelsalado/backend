@@ -14,10 +14,7 @@ export const requireAuthMiddleware = (
 		return response.status(401).json({ message: "AUTH_UNAUTHORIZED_ACCESS" });
 	}
 
-	if (
-		typeof authToken !== "undefined" &&
-		!jwtService.verifyAccessToken(authToken).isValid
-	) {
+	if (!jwtService.verifyAccessToken(authToken.split(" ")[1]).isValid) {
 		return response.status(403).json({ message: "AUTH_FORBIDDEN_ACCESS" });
 	}
 

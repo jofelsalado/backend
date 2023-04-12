@@ -49,13 +49,13 @@ model User {
 
 model UserJWTBlacklist {
   id        Int      @id @unique @default(autoincrement())
-  name      String
+  token     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  userId    Int
-  user      User     @relation(references: [id], fields: [userId])
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
 
-  @@index([id, userId])
+  @@index([id])
 }
 
 model Adviser {
@@ -102,7 +102,7 @@ model LeadInquiry {
   productId Int
   product   Product  @relation(references: [id], fields: [productId])
 
-  @@index([productId])
+  @@index([id, productId])
 }
 
 model LeadNotification {
@@ -131,7 +131,7 @@ model LeadComplaintReport {
   lead             Lead               @relation(references: [id], fields: [leadId])
   leadNotification LeadNotification[]
 
-  @@index([leadId])
+  @@index([id, leadId])
 }
 
 model LeadConsultationHistory {
@@ -148,7 +148,7 @@ model LeadConsultationHistory {
   productId   Int
   product     Product  @relation(references: [id], fields: [productId])
 
-  @@index([leadId, productId])
+  @@index([id, leadId, productId])
 }
 
 model Product {
@@ -168,7 +168,7 @@ model Product {
   leadConsultaionHistory     LeadConsultationHistory[]
   adviserConsultationHistory AdviserConsultationHistory[]
 
-  @@index([adviserId])
+  @@index([id, adviserId])
 }
 
 model AdviserManageConsultation {
@@ -182,7 +182,7 @@ model AdviserManageConsultation {
   leadId      Int
   lead        Lead     @relation(references: [id], fields: [leadId])
 
-  @@index([productId, leadId])
+  @@index([id, productId, leadId])
 }
 
 model AdviserComplaintReport {
@@ -196,7 +196,7 @@ model AdviserComplaintReport {
   adviser             Adviser               @relation(references: [id], fields: [adviserId])
   adviserNotification AdviserNotification[]
 
-  @@index([adviserId])
+  @@index([id, adviserId])
 }
 
 model AdviserConsultationHistory {
@@ -213,7 +213,7 @@ model AdviserConsultationHistory {
   productId   Int
   product     Product  @relation(references: [id], fields: [productId])
 
-  @@index([adviserId, productId])
+  @@index([id, adviserId, productId])
 }
 
 model AdviserNotification {
@@ -240,4 +240,6 @@ model AdminManageReport {
   updatedAt   DateTime @updatedAt
   userId      Int
   user        User     @relation(fields: [userId], references: [id])
+
+  @@index([id, userId])
 }

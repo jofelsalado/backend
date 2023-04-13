@@ -1,5 +1,8 @@
-node_modules
-dist
+# dependencies
+/node_modules
+
+# build folder
+/dist
 
 # Keep environment variables out of version control
 .env

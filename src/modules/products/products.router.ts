@@ -16,7 +16,7 @@ export default class ProductsRouter {
 	}
 
 	private setupRoutes(): void {
-		this.router.post("/products", this.productsController.getProductsHandler);
+		this.router.get("/products", this.productsController.getProductsHandler);
 	}
 
 	get getRoutes() {

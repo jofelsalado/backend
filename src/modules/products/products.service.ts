@@ -1,3 +1,4 @@
+import { Product } from "@prisma/client";
 import PrismaService from "../../services/prisma.service";
 
 export default class ProductsService {
@@ -5,5 +6,11 @@ export default class ProductsService {
 
 	constructor() {
 		this.prismaService = new PrismaService();
+	}
+
+	public getProducts = async () => {
+		const products : Product[] | [] = await this.prismaService.prisma.product.findMany()
+
+		return products
 	}
 }

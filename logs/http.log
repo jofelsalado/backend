@@ -2,3 +2,7 @@
 
 2023-04-14T04:48:24.517Z [http] GET /api/v1/products 200 - 78.393 ms
 
+2023-04-14T04:51:44.614Z [http] GET /api/v1/products 200 - 66.909 ms [Payload]: {}
+
+2023-04-14T04:52:01.276Z [http] GET /api/v1/products 200 - 3.476 ms [Payload]: {"a":1}
+

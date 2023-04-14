@@ -74,8 +74,10 @@ export default class App {
 			],
 		});
 
+		morgan.token("body", (request: Request) => JSON.stringify(request.body));
+
 		this.express.use(
-			morgan(":method :url :status - :response-time ms", {
+			morgan(":method :url :status - :response-time ms [Payload]: :body", {
 				stream: {
 					write: (message) => {
 						logger.http(message);

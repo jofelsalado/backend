@@ -27,10 +27,17 @@ yarn build
 
 (To sync prisma model with database)
 ** Using NPM **
-npx prisma db:push
+npx prisma db push
 
 ** Using Yarn **
-yarn prisma db:push
+yarn prisma db push
+
+(To seed database table initial data)
+** Using NPM **
+npx prisma db seed
+
+** Using yarn **
+yarn prisma db seed
 ```
 
 ---

@@ -1,0 +1,4 @@
+2023-04-14T04:47:46.872Z [http] GET /api/v1/products 200 - 63.750 ms
+
+2023-04-14T04:48:24.517Z [http] GET /api/v1/products 200 - 78.393 ms
+

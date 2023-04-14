@@ -10,20 +10,29 @@ export default class ProductsService {
 	}
 
 	public getProducts = async () => {
-		const products : Product[] | [] = await this.prismaService.prisma.product.findMany()
+		const products: Product[] | [] = await this.prismaService.prisma.product.findMany();
 
-		return products
-	}
+		return products;
+	};
 
-	public createProduct = async (product: ProductDto) => {
+	public createProduct = async (productData: ProductDto) => {
+		const product: Product = await this.prismaService.prisma.product.create({
+			data: productData,
+		});
 
-	}
+		if (product) {
+			return {
+				isCreated: true,
+				product,
+			};
+		}
 
-	public updateProduct = async (product: ProductDto) => {
-		
-	}
+		return {
+			isCreated: false,
+		};
+	};
 
-	public deleteProduct = async (product: ProductDto) => {
-		
-	}
+	public updateProduct = async (productData: ProductDto) => {};
+
+	public deleteProduct = async (productData: ProductDto) => {};
 }

@@ -16,7 +16,11 @@ const ROUTER: any = {
 
 export const initializeApiRoutes = (app: Application) => {
 	app.use("/api/v1", ROUTER.$auth.getRoutes);
-	app.use("/api/v1", ROUTER.$products.getRoutes);
+	app.use(
+		"/api/v1",
+		MIDDLEWARES.use("requireAuthMiddleware"),
+		ROUTER.$products.getRoutes
+	);
 
 	Object.keys(ROUTER).map((r: any) =>
 		ROUTER[r].router.stack.filter((r: any) => {

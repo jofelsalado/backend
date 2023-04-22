@@ -66,13 +66,15 @@ export default class ProductsService {
 	};
 
 	public deleteProduct = async (productId: number) => {
-		const product = await this.prismaService.prisma.product.delete({
+		const product = await this.prismaService.prisma.product.findUnique({
 			where: { id: Number(productId) },
 		});
 
-		console.log(product);
-
 		if (product) {
+			await this.prismaService.prisma.product.delete({
+				where: { id: Number(productId) },
+			});
+
 			return {
 				isDeleted: true,
 				product,

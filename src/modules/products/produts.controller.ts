@@ -86,7 +86,10 @@ export default class ProductsController {
 				return response.status(204).json({ data });
 			}
 
-			return response.status(400).json({ message: "FAILED_TO_DELETE_PRODUCT" });
+			return response.status(400).json({
+				message: "FAILED_TO_DELETE_PRODUCT",
+				info: "Product may not exist anymore",
+			});
 		} catch (error) {
 			return response.status(500).json({ message: "INTERNAL_SERVER_ERROR" });
 		}

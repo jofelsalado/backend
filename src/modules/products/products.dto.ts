@@ -8,7 +8,9 @@ interface Product {
 	type: string;
 	quotation: string;
 	status: string;
-	adviserId: number;
+	meetingType: string;
+	url: string;
+	adviserId?: number;
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -33,6 +35,11 @@ export class ProductDto implements Partial<Product> {
 	status: string;
 
 	@IsNotEmpty()
+	meetingType: string;
+
+	@IsNotEmpty()
+	url: string;
+
 	@IsInt()
 	adviserId: number;
 }

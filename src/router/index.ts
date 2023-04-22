@@ -22,14 +22,14 @@ export const initializeApiRoutes = (app: Application) => {
 		ROUTER.$products.getRoutes
 	);
 
-	Object.keys(ROUTER).map((r: any) =>
-		ROUTER[r].router.stack.filter((r: any) => {
-			const baseURL: string = `${env("URL")}:${env("PORT")}/api/v1`;
+	// Object.keys(ROUTER).map((r: any) =>
+	// 	ROUTER[r].router.stack.filter((r: any) => {
+	// 		const baseURL: string = `${env("URL")}:${env("PORT")}/api/v1`;
 
-			console.log({
-				path: String(baseURL + r.route.path),
-				method: String(r.route.stack[0].method).toUpperCase(),
-			});
-		})
-	);
+	// 		console.log({
+	// 			path: String(baseURL + r.route.path),
+	// 			method: String(r.route.stack[0].method).toUpperCase(),
+	// 		});
+	// 	})
+	// );
 };

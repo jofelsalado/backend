@@ -159,10 +159,12 @@ model Product {
   type                       String
   quotation                  String
   status                     String
+  meetingType                String
+  url                        String                       @unique
   createdAt                  DateTime                     @default(now())
   updatedAt                  DateTime                     @updatedAt
-  adviserId                  Int
-  adviser                    Adviser                      @relation(references: [id], fields: [adviserId])
+  adviserId                  Int?
+  adviser                    Adviser?                     @relation(references: [id], fields: [adviserId])
   leadInquiry                LeadInquiry[]
   adviserManageConsultation  AdviserManageConsultation[]
   leadConsultaionHistory     LeadConsultationHistory[]

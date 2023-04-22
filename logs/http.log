@@ -6,3 +6,9 @@
 
 2023-04-14T04:52:01.276Z [http] GET /api/v1/products 200 - 3.476 ms [Payload]: {"a":1}
 
+2023-04-22T03:39:06.152Z [http] POST /api/v1/auth/login 200 - 202.294 ms [Payload]: {"email":"admin@allcarebusiness.com","password":"admin2023"}
+
+2023-04-22T03:45:02.283Z [http] GET /api/v1/products 403 - 13.537 ms [Payload]: {}
+
+2023-04-22T03:45:26.054Z [http] GET /api/v1/products 200 - 144.136 ms [Payload]: {}
+

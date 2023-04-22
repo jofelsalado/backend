@@ -13,7 +13,7 @@ export default class ProductsController {
 	public getProductsHandler = async (request: Request, response: Response) => {
 		try {
 			const params = request.params;
-			const data = await this.productsService.getProducts();
+			const data = await this.productsService.getProducts(params);
 
 			return response.status(200).json(data);
 		} catch (error) {
@@ -23,6 +23,13 @@ export default class ProductsController {
 
 	public getProductByIdHandler = async (request: Request, response: Response) => {
 		try {
+			const data = await this.productsService.getProductById(Number(request.params.id));
+
+			if (!data) {
+				return response.status(404).json(null);
+			}
+
+			return response.status(200).json({ data });
 		} catch (error) {
 			return response.status(500).json({ message: "INTERNAL_SERVER_ERROR" });
 		}

@@ -11,6 +11,7 @@ export default class ProductsService {
 
 	public getProducts = async (params: any) => {
 		const products: Product[] | [] = await this.prismaService.prisma.product.findMany();
+		console.log(products);
 
 		return products;
 	};

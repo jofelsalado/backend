@@ -15,8 +15,10 @@ export default class ProductsRouter {
 	private setupRoutes(): void {
 		this.router
 			.get("/products", this.productsController.getProductsHandler)
-			.get("/product/:id", this.productsController.getProductByIdHandler)
-			.post("/products", this.productsController.createProductHandler);
+			.post("/products", this.productsController.createProductHandler)
+			.patch("/products/:id", this.productsController.updateProductHandler)
+			.get("/products/:id", this.productsController.getProductByIdHandler)
+			.delete("/products/:id", this.productsController.deleteProductHandler);
 	}
 
 	get getRoutes() {

@@ -12,7 +12,7 @@ export default class JWTService {
 
 	public createAccessToken = (payload: any): string => {
 		return jwt.sign(payload, this.JWT_KEY, {
-			expiresIn: "2d",
+			expiresIn: "1d",
 			algorithm: "HS256",
 		});
 	};

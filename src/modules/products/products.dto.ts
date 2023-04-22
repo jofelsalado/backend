@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsInt } from "class-validator";
+import { IsNotEmpty, IsInt, IsOptional } from "class-validator";
 
 interface Product {
 	id: number;
@@ -41,5 +41,6 @@ export class ProductDto implements Partial<Product> {
 	url: string;
 
 	@IsInt()
+	@IsOptional()
 	adviserId: number;
 }

@@ -44,6 +44,12 @@ export default class ProductsController {
 			}
 
 			const data = await this.productsService.createProduct(request.body);
+
+			if (data.isCreated) {
+				return response.status(201).json({ data });
+			}
+
+			return response.status(400).json({ message: "FAILED_TO_CREATE_PRODUCT" });
 		} catch (error) {
 			return response.status(500).json({ message: "INTERNAL_SERVER_ERROR" });
 		}
@@ -51,6 +57,22 @@ export default class ProductsController {
 
 	public updateProductHandler = async (request: Request, response: Response) => {
 		try {
+			const requestValidated = await validateDTO(ProductDto, request.body);
+
+			if (requestValidated.isError) {
+				return response.status(400).json(requestValidated.errors);
+			}
+
+			const data = await this.productsService.updateProduct(
+				Number(request.params.id),
+				request.body
+			);
+
+			if (data.isUpdated) {
+				return response.status(201).json({ data });
+			}
+
+			return response.status(400).json({ message: "FAILED_TO_UPDATE_PRODUCT" });
 		} catch (error) {
 			return response.status(500).json({ message: "INTERNAL_SERVER_ERROR" });
 		}
@@ -58,6 +80,7 @@ export default class ProductsController {
 
 	public deleteProductHandler = async (request: Request, response: Response) => {
 		try {
+			const data = await this.productsService.deleteProduct(Number(request.params.id));
 		} catch (error) {
 			return response.status(500).json({ message: "INTERNAL_SERVER_ERROR" });
 		}

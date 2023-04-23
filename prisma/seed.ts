@@ -70,21 +70,21 @@ async function main() {
 		],
 	});
 
-	// for (let i = 0; i <= 100; i++) {
-	// 	const sku: string = String(randomString.generate(10)).toUpperCase();
-	// 	await prismaService.prisma.product.create({
-	// 		data: {
-	// 			sku: sku,
-	// 			name: "Product - " + sku,
-	// 			description: randomString.generate(100),
-	// 			type: "product",
-	// 			quotation: "N/A",
-	// 			status: "pending",
-	// 			meetingType: "N/A",
-	// 			url: "/product/sku/" + sku,
-	// 		},
-	// 	});
-	// }
+	for (let i = 0; i <= 100; i++) {
+		const sku: string = String(randomString.generate(10)).toUpperCase();
+		await prismaService.prisma.product.create({
+			data: {
+				sku: sku,
+				name: "Product - " + sku,
+				description: randomString.generate(100),
+				type: "product",
+				quotation: "N/A",
+				status: "pending",
+				meetingType: "N/A",
+				url: "/product/sku/" + sku,
+			},
+		});
+	}
 }
 
 main();

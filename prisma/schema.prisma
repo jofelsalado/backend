@@ -12,7 +12,7 @@ datasource db {
 }
 
 model UserType {
-  id        Int      @id @unique @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -20,7 +20,7 @@ model UserType {
 }
 
 model User {
-  id                Int                 @id @unique @default(autoincrement())
+  id                Int                 @id @default(autoincrement())
   accountNo         String              @unique
   avatarImage       String
   firstName         String
@@ -43,12 +43,13 @@ model User {
   adviserId         Int?
   adviser           Adviser?
   adminManageReport AdminManageReport[]
+  feedbackRating    FeedbackRating[]
 
   @@index([id, userTypeId, leadId])
 }
 
 model UserJWTBlacklist {
-  id        Int      @id @unique @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   token     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -59,7 +60,7 @@ model UserJWTBlacklist {
 }
 
 model Adviser {
-  id                         Int                          @id @unique @default(autoincrement())
+  id                         Int                          @id @default(autoincrement())
   roleId                     Int
   rating                     String
   company                    String
@@ -76,7 +77,7 @@ model Adviser {
 }
 
 model Lead {
-  id                        Int                         @id @unique @default(autoincrement())
+  id                        Int                         @id @default(autoincrement())
   roleId                    Int
   rating                    String
   company                   String
@@ -94,7 +95,7 @@ model Lead {
 }
 
 model LeadInquiry {
-  id        Int      @id @unique @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   leadId    Int
@@ -106,7 +107,7 @@ model LeadInquiry {
 }
 
 model LeadNotification {
-  id                    Int                 @id @unique @default(autoincrement())
+  id                    Int                 @id @default(autoincrement())
   reportType            String
   time                  String
   status                String
@@ -121,7 +122,7 @@ model LeadNotification {
 }
 
 model LeadComplaintReport {
-  id               Int                @id @unique @default(autoincrement())
+  id               Int                @id @default(autoincrement())
   name             String
   description      String
   reportDate       DateTime
@@ -135,7 +136,7 @@ model LeadComplaintReport {
 }
 
 model LeadConsultationHistory {
-  id          Int      @id @unique @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   company     String
   meetingType String
   adviserName String
@@ -152,7 +153,7 @@ model LeadConsultationHistory {
 }
 
 model Product {
-  id                         Int                          @id @unique @default(autoincrement())
+  id                         Int                          @id @default(autoincrement())
   sku                        String                       @unique
   name                       String                       @unique
   description                String                       @db.LongText
@@ -174,7 +175,7 @@ model Product {
 }
 
 model AdviserManageConsultation {
-  id          Int      @id @unique @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   type        String
   meetingType String
   createdAt   DateTime @default(now())
@@ -188,7 +189,7 @@ model AdviserManageConsultation {
 }
 
 model AdviserComplaintReport {
-  id                  Int                   @id @unique @default(autoincrement())
+  id                  Int                   @id @default(autoincrement())
   name                String
   description         String
   reportDate          DateTime
@@ -202,7 +203,7 @@ model AdviserComplaintReport {
 }
 
 model AdviserConsultationHistory {
-  id          Int      @id @unique @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   company     String
   meetingType String
   adviserName String
@@ -219,7 +220,7 @@ model AdviserConsultationHistory {
 }
 
 model AdviserNotification {
-  id                       Int                    @id @unique @default(autoincrement())
+  id                       Int                    @id @default(autoincrement())
   reportType               String
   time                     String
   status                   String
@@ -234,7 +235,7 @@ model AdviserNotification {
 }
 
 model AdminManageReport {
-  id          Int      @id @unique @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String   @unique
   description String   @db.Text
   reportDate  DateTime
@@ -242,6 +243,19 @@ model AdminManageReport {
   updatedAt   DateTime @updatedAt
   userId      Int
   user        User     @relation(fields: [userId], references: [id])
+
+  @@index([id, userId])
+}
+
+model FeedbackRating {
+  id                  Int      @id @default(autoincrement())
+  createdAt           DateTime @default(now())
+  rating              String
+  feedbackDescription String
+  feedbackDate        DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  userId              Int
+  user                User     @relation(fields: [userId], references: [id])
 
   @@index([id, userId])
 }

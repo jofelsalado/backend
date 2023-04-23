@@ -18,7 +18,7 @@ export const initializeApiRoutes = (app: Application) => {
 	app.use("/api/v1", ROUTER.$auth.getRoutes);
 	app.use(
 		"/api/v1",
-		MIDDLEWARES.use("requireAuthMiddleware"),
+		// MIDDLEWARES.use("requireAuthMiddleware"),
 		ROUTER.$products.getRoutes
 	);
 

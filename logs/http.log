@@ -130,3 +130,19 @@
 
 2023-04-22T14:26:35.744Z [http] PATCH /api/v1/products/338743 201 - 11.891 ms [Payload]: {"sku":"p-sku-12222222222zzzz","name":"Product - p-sku-1235","description":"some random description","type":"product","quotation":"N/A","status":"pending","meetingType":"N/A","url":"/product/sku/p-sku-1235"}
 
+2023-04-24T03:21:01.874Z [http] GET /api/v1/products 200 - 154.516 ms [Payload]: {}
+
+2023-04-24T03:21:25.686Z [http] PATCH /api/v1/products/1 201 - 71.694 ms [Payload]: {"sku":"product-1-sku","name":"updated nameeeeeeeeeeeeeee","description":"some random description","type":"product","quotation":"N/A","status":"pending","meetingType":"N/A","url":"/product/sku/p-sku-1235"}
+
+2023-04-24T03:22:47.600Z [http] GET /api/v1/accounts 404 - 1.122 ms [Payload]: {}
+
+2023-04-24T03:25:13.617Z [http] GET /api/v1/accounts 200 - 52.748 ms [Payload]: {}
+
+2023-04-24T03:31:05.052Z [http] GET /api/v1/accounts/by-type/admin 404 - 1.494 ms [Payload]: {}
+
+2023-04-24T03:31:50.713Z [http] GET /api/v1/accounts/by-type/admin 404 - 0.450 ms [Payload]: {}
+
+2023-04-24T03:31:59.215Z [http] GET /api/v1/accounts/by-type/admin 200 - 52.587 ms [Payload]: {}
+
+2023-04-24T03:32:30.668Z [http] GET /api/v1/accounts/by-type/admin 200 - 3.300 ms [Payload]: {}
+

@@ -13,7 +13,7 @@ datasource db {
 
 model UserType {
   id        Int      @id @default(autoincrement())
-  name      String
+  name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   users     User[]
@@ -38,14 +38,12 @@ model User {
   userTypeId        Int
   userType          UserType            @relation(references: [id], fields: [userTypeId])
   userJWTBlacklist  UserJWTBlacklist[]
-  leadId            Int?
   lead              Lead?
-  adviserId         Int?
   adviser           Adviser?
   adminManageReport AdminManageReport[]
   feedbackRating    FeedbackRating[]
 
-  @@index([id, userTypeId, leadId])
+  @@index([id, userTypeId])
 }
 
 model UserJWTBlacklist {
@@ -61,7 +59,6 @@ model UserJWTBlacklist {
 
 model Adviser {
   id                         Int                          @id @default(autoincrement())
-  roleId                     Int
   rating                     String
   company                    String
   createdAt                  DateTime                     @default(now())
@@ -78,7 +75,6 @@ model Adviser {
 
 model Lead {
   id                        Int                         @id @default(autoincrement())
-  roleId                    Int
   rating                    String
   company                   String
   createdAt                 DateTime                    @default(now())

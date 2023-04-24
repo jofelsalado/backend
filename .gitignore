@@ -5,8 +5,7 @@
 /dist
 
 # Logs folder
-/logs
-/logs/http.log
+/logs   
 
 # Keep environment variables out of version control
 .env

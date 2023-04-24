@@ -14,6 +14,7 @@ export default class AccountsRouter {
 
 	private setupRoutes(): void {
 		this.router
+			.get("/account-types", this.accountsController.getAccountTypesHandler)
 			.get("/accounts", this.accountsController.getAccountsHandler)
 			.post("/accounts", this.accountsController.createAccountHandler)
 			.get("/accounts/by-type/:type", this.accountsController.getAccountsByTypeHandler)

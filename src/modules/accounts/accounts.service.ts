@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { User, UserType } from "@prisma/client";
 import randomString from "randomstring";
 import PrismaService from "../../services/prisma.service";
 import { UserDto } from "./accounts.dto";
@@ -10,6 +10,13 @@ export default class AccountsService {
 	constructor() {
 		this.prismaService = new PrismaService();
 	}
+
+	public getAccountTypes = async () => {
+		const accountTypes: UserType[] | [] =
+			await this.prismaService.prisma.userType.findMany();
+
+		return accountTypes;
+	};
 
 	public getAccounts = async (params: any) => {
 		const accounts: User[] | [] = await this.prismaService.prisma.user.findMany();

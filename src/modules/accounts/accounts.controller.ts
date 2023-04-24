@@ -10,6 +10,16 @@ export default class AccountsController {
 		this.accountsService = new AccountsService();
 	}
 
+	public getAccountTypesHandler = async (request: Request, response: Response) => {
+		try {
+			const data = await this.accountsService.getAccountTypes();
+
+			return response.status(200).json({ data });
+		} catch (error) {
+			return response.status(500).json({ message: "INTERNAL_SERVER_ERROR" });
+		}
+	};
+
 	public getAccountsHandler = async (request: Request, response: Response) => {
 		try {
 			const params = request.params;

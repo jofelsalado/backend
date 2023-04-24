@@ -9,11 +9,41 @@ export default class AdvisersService {
 		this.prismaService = new PrismaService();
 	}
 
-	public createAdviser = (adviserData: AdviserDto) => {
-		//
+	public createAdviser = async (adviserData: AdviserDto) => {
+		const adviser: Adviser = await this.prismaService.prisma.adviser.create({
+			data: { ...adviserData },
+		});
+
+		if (adviser) {
+			return {
+				isCreated: true,
+				adviser,
+			};
+		}
+
+		return {
+			isCreated: false,
+		};
 	};
 
-	public deleteAdviser = (adviserId: number) => {
-		//
+	public deleteAdviser = async (adviserId: number) => {
+		const adviser = await this.prismaService.prisma.adviser.findUnique({
+			where: { id: Number(adviserId) },
+		});
+
+		if (adviser) {
+			await this.prismaService.prisma.user.delete({
+				where: { id: Number(adviserId) },
+			});
+
+			return {
+				isDeleted: true,
+				adviser,
+			};
+		}
+
+		return {
+			isDeleted: false,
+		};
 	};
 }

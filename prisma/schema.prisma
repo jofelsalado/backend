@@ -66,7 +66,7 @@ model Adviser {
   createdAt                  DateTime                     @default(now())
   updatedAt                  DateTime                     @updatedAt
   userId                     Int                          @unique
-  user                       User                         @relation(references: [id], fields: [userId])
+  user                       User                         @relation(references: [id], fields: [userId], onDelete: Cascade)
   products                   Product[]
   adviserComplaintReport     AdviserComplaintReport[]
   adviserConsultationHistory AdviserConsultationHistory[]
@@ -82,7 +82,7 @@ model Lead {
   createdAt                 DateTime                    @default(now())
   updatedAt                 DateTime                    @updatedAt
   userId                    Int                         @unique
-  user                      User                        @relation(references: [id], fields: [userId])
+  user                      User                        @relation(references: [id], fields: [userId], onDelete: Cascade)
   leadNotification          LeadNotification[]
   adviserManageConsultation AdviserManageConsultation[]
   leadInquiry               LeadInquiry[]
@@ -97,9 +97,9 @@ model LeadInquiry {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   leadId    Int
-  lead      Lead     @relation(references: [id], fields: [leadId])
+  lead      Lead     @relation(references: [id], fields: [leadId], onDelete: Cascade)
   productId Int
-  product   Product  @relation(references: [id], fields: [productId])
+  product   Product  @relation(references: [id], fields: [productId], onDelete: Cascade)
 
   @@index([id, productId])
 }
@@ -112,9 +112,9 @@ model LeadNotification {
   createdAt             DateTime            @default(now())
   updatedAt             DateTime            @updatedAt
   leadId                Int
-  lead                  Lead                @relation(references: [id], fields: [leadId])
+  lead                  Lead                @relation(references: [id], fields: [leadId], onDelete: Cascade)
   leadComplaintReportId Int
-  leadComplaintReport   LeadComplaintReport @relation(fields: [leadComplaintReportId], references: [id])
+  leadComplaintReport   LeadComplaintReport @relation(fields: [leadComplaintReportId], references: [id], onDelete: Cascade)
 
   @@index([id, leadId])
 }
@@ -127,7 +127,7 @@ model LeadComplaintReport {
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
   leadId           Int
-  lead             Lead               @relation(references: [id], fields: [leadId])
+  lead             Lead               @relation(references: [id], fields: [leadId], onDelete: Cascade)
   leadNotification LeadNotification[]
 
   @@index([id, leadId])
@@ -143,9 +143,9 @@ model LeadConsultationHistory {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   leadId      Int
-  lead        Lead     @relation(references: [id], fields: [leadId])
+  lead        Lead     @relation(references: [id], fields: [leadId], onDelete: Cascade)
   productId   Int
-  product     Product  @relation(references: [id], fields: [productId])
+  product     Product  @relation(references: [id], fields: [productId], onDelete: Cascade)
 
   @@index([id, leadId, productId])
 }
@@ -163,7 +163,7 @@ model Product {
   createdAt                  DateTime                     @default(now())
   updatedAt                  DateTime                     @updatedAt
   adviserId                  Int?
-  adviser                    Adviser?                     @relation(references: [id], fields: [adviserId])
+  adviser                    Adviser?                     @relation(references: [id], fields: [adviserId], onDelete: Cascade)
   leadInquiry                LeadInquiry[]
   adviserManageConsultation  AdviserManageConsultation[]
   leadConsultaionHistory     LeadConsultationHistory[]
@@ -179,9 +179,9 @@ model AdviserManageConsultation {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   productId   Int
-  product     Product  @relation(references: [id], fields: [productId])
+  product     Product  @relation(references: [id], fields: [productId], onDelete: Cascade)
   leadId      Int
-  lead        Lead     @relation(references: [id], fields: [leadId])
+  lead        Lead     @relation(references: [id], fields: [leadId], onDelete: Cascade)
 
   @@index([id, productId, leadId])
 }
@@ -194,7 +194,7 @@ model AdviserComplaintReport {
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
   adviserId           Int
-  adviser             Adviser               @relation(references: [id], fields: [adviserId])
+  adviser             Adviser               @relation(references: [id], fields: [adviserId], onDelete: Cascade)
   adviserNotification AdviserNotification[]
 
   @@index([id, adviserId])
@@ -210,9 +210,9 @@ model AdviserConsultationHistory {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   adviserId   Int
-  adviser     Adviser  @relation(references: [id], fields: [adviserId])
+  adviser     Adviser  @relation(references: [id], fields: [adviserId], onDelete: Cascade)
   productId   Int
-  product     Product  @relation(references: [id], fields: [productId])
+  product     Product  @relation(references: [id], fields: [productId], onDelete: Cascade)
 
   @@index([id, adviserId, productId])
 }
@@ -225,9 +225,9 @@ model AdviserNotification {
   createdAt                DateTime               @default(now())
   updatedAt                DateTime               @updatedAt
   adviserId                Int
-  adviser                  Adviser                @relation(references: [id], fields: [adviserId])
+  adviser                  Adviser                @relation(references: [id], fields: [adviserId], onDelete: Cascade)
   adviserComplaintReportId Int
-  adviserComplaintReport   AdviserComplaintReport @relation(fields: [adviserComplaintReportId], references: [id])
+  adviserComplaintReport   AdviserComplaintReport @relation(fields: [adviserComplaintReportId], references: [id], onDelete: Cascade)
 
   @@index([id, adviserId, adviserComplaintReportId])
 }
@@ -240,7 +240,7 @@ model AdminManageReport {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   userId      Int
-  user        User     @relation(fields: [userId], references: [id])
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([id, userId])
 }
@@ -253,7 +253,7 @@ model FeedbackRating {
   feedbackDate        DateTime @default(now())
   updatedAt           DateTime @updatedAt
   userId              Int
-  user                User     @relation(fields: [userId], references: [id])
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([id, userId])
 }

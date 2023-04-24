@@ -6,6 +6,7 @@
 
 # Logs folder
 /logs
+/logs/http.log
 
 # Keep environment variables out of version control
 .env

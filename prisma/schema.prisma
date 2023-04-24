@@ -60,7 +60,9 @@ model UserJWTBlacklist {
 model Adviser {
   id                         Int                          @id @default(autoincrement())
   rating                     String
+  expertise                  String
   company                    String
+  credentialLink             String
   createdAt                  DateTime                     @default(now())
   updatedAt                  DateTime                     @updatedAt
   userId                     Int                          @unique

@@ -1,4 +1,5 @@
 import { User } from "@prisma/client";
+import randomString from "randomstring";
 import PrismaService from "../../services/prisma.service";
 import { UserDto } from "./accounts.dto";
 import { hashPassword } from "./../../utilities/password.util";
@@ -17,7 +18,6 @@ export default class AccountsService {
 	};
 
 	public getAccountsByType = async (type: string) => {
-		console.log(type);
 		const accounts: User[] | [] = await this.prismaService.prisma.user.findMany({
 			where: {
 				userType: {
@@ -40,10 +40,13 @@ export default class AccountsService {
 	};
 
 	public createAccount = async (accountData: UserDto) => {
-		accountData.password = await hashPassword(accountData.password);
-
 		const account: User = await this.prismaService.prisma.user.create({
-			data: { ...accountData, accountNo: "N/A", avatarImage: "N/A" },
+			data: {
+				...accountData,
+				password: await hashPassword(accountData.password),
+				accountNo: "ACCNT-" + String(randomString.generate(10)).toUpperCase(),
+				avatarImage: "N/A",
+			},
 		});
 
 		if (account) {

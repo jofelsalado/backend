@@ -61,6 +61,7 @@ export default class AccountsController {
 
 			return response.status(400).json({ message: "FAILED_TO_CREATE_ACCOUNT" });
 		} catch (error) {
+			console.log(error);
 			return response.status(500).json({ message: "INTERNAL_SERVER_ERROR" });
 		}
 	};

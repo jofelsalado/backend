@@ -4,6 +4,9 @@
 # build folder
 /dist
 
+# Logs folder
+/logs
+
 # Keep environment variables out of version control
 .env
 .env.development

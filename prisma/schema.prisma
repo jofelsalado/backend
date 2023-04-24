@@ -154,14 +154,14 @@ model LeadConsultationHistory {
 
 model Product {
   id                         Int                          @id @default(autoincrement())
-  sku                        String                       @unique
-  name                       String                       @unique
+  sku                        String
+  name                       String
   description                String                       @db.LongText
   type                       String
   quotation                  String
   status                     String
   meetingType                String
-  url                        String                       @unique
+  url                        String
   createdAt                  DateTime                     @default(now())
   updatedAt                  DateTime                     @updatedAt
   adviserId                  Int?

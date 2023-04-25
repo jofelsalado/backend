@@ -19,6 +19,7 @@ export default class AuthService {
 			},
 			include: {
 				userType: true,
+				adviser: true,
 			},
 		});
 

@@ -1,17 +1,28 @@
-import { Adviser } from "@prisma/client";
+import { Adviser, Product } from "@prisma/client";
 import PrismaService from "./../../services/prisma.service";
 import { AdviserDto } from "./advisers.dto";
 
 export default class AdvisersService {
-	private prismaService;
+	private prismaService: PrismaService;
 
 	constructor() {
 		this.prismaService = new PrismaService();
 	}
 
-	public createAdviser = async (adviserData: AdviserDto) => {
-		const adviser: Adviser = await this.prismaService.prisma.adviser.create({
-			data: { ...adviserData },
+	public getAdviserProducts = async (adviserId: number) => {
+		const products: Product[] | Product = await this.prismaService.prisma.product.findMany({
+			where: {
+				adviserId,
+			},
+		});
+
+		return products;
+	};
+
+	public createAdviser = async (adviserData: AdviserDto | any, userId: number) => {
+		const adviser = await this.prismaService.prisma.user.update({
+			where: { id: Number(userId) },
+			data: { adviser: adviserData },
 		});
 
 		if (adviser) {

@@ -17,6 +17,7 @@ export default class AccountsRouter {
 			.get("/account-types", this.accountsController.getAccountTypesHandler)
 			.get("/accounts", this.accountsController.getAccountsHandler)
 			.post("/accounts", this.accountsController.createAccountHandler)
+			.get("/account/adviser/:adviserId/products", this.accountsController.getAdviserAccountProductsHandler)
 			.get("/accounts/by-type/:type", this.accountsController.getAccountsByTypeHandler)
 			.patch("/accounts/:id", this.accountsController.updateAccountHandler)
 			.get("/accounts/:id", this.accountsController.getAccountByIdHandler)

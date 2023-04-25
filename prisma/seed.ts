@@ -70,7 +70,7 @@ async function main() {
 		],
 	});
 
-	for (let i = 0; i <= 100; i++) {
+	for (let i = 0; i <= 50; i++) {
 		const sku: string = String(randomString.generate(10)).toUpperCase();
 		await prismaService.prisma.product.create({
 			data: {

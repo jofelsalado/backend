@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsInt, IsIn } from "class-validator";
+import { IsNotEmpty, IsInt } from "class-validator";
 
 interface Adviser {
 	rating: string;

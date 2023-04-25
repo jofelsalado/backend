@@ -3,7 +3,7 @@ import PrismaService from "../../services/prisma.service";
 import { ProductDto } from "./products.dto";
 
 export default class ProductsService {
-	private prismaService;
+	private prismaService: PrismaService;
 
 	constructor() {
 		this.prismaService = new PrismaService();
@@ -11,7 +11,6 @@ export default class ProductsService {
 
 	public getProducts = async (params: any) => {
 		const products: Product[] | [] = await this.prismaService.prisma.product.findMany();
-		console.log(products);
 
 		return products;
 	};

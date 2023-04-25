@@ -1,19 +1,21 @@
 import { User, UserType } from "@prisma/client";
 import randomString from "randomstring";
 import PrismaService from "../../services/prisma.service";
+import AdvisersService from "./../advisers/advisers.service";
 import { UserDto } from "./accounts.dto";
 import { hashPassword } from "./../../utilities/password.util";
 
 export default class AccountsService {
-	private prismaService;
+	private prismaService: PrismaService;
+	private advisersService: AdvisersService;
 
 	constructor() {
 		this.prismaService = new PrismaService();
+		this.advisersService = new AdvisersService();
 	}
 
 	public getAccountTypes = async () => {
-		const accountTypes: UserType[] | [] =
-			await this.prismaService.prisma.userType.findMany();
+		const accountTypes: UserType[] | [] = await this.prismaService.prisma.userType.findMany();
 
 		return accountTypes;
 	};
@@ -41,7 +43,13 @@ export default class AccountsService {
 			where: {
 				id: Number(accountId),
 			},
+			include: {
+				userType: true,
+			},
 		});
+
+		// @ts-ignore
+		delete account["password"];
 
 		return account;
 	};
@@ -56,10 +64,23 @@ export default class AccountsService {
 			},
 		});
 
+		if (accountData.userTypeId === 3) {
+			await this.advisersService.createAdviser(
+				{
+					userId: account.id,
+					rating: "N/A",
+					expertise: "N/A",
+					company: "N/A",
+					credentialLink: "N/A",
+				},
+				account.id
+			);
+		}
+
 		if (account) {
 			return {
 				isCreated: true,
-				account,
+				account: await this.getAccountById(account.id),
 			};
 		}
 

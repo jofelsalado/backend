@@ -64,7 +64,6 @@ export default class App {
 			format: winston.format.combine(
 				winston.format.timestamp(),
 				winston.format.printf((m) => {
-					console.log(m);
 					return `${m.timestamp} [${m.level}] ${m.message}`;
 				})
 			),

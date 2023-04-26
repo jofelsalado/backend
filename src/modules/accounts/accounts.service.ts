@@ -45,6 +45,7 @@ export default class AccountsService {
 			},
 			include: {
 				userType: true,
+				adviser: true,
 			},
 		});
 

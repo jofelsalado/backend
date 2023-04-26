@@ -19,10 +19,20 @@ export default class AdvisersService {
 		return products;
 	};
 
-	public createAdviser = async (adviserData: AdviserDto | any, userId: number) => {
-		const adviser = await this.prismaService.prisma.user.update({
+	public createAdviser = async (adviserData: AdviserDto, userId: number) => {
+		const adviser = await this.prismaService.prisma.adviser.create({
+			data: { ...adviserData },
+		});
+
+		const connectAdviserToUser = await this.prismaService.prisma.user.update({
 			where: { id: Number(userId) },
-			data: { adviser: adviserData },
+			data: {
+				adviser: {
+					connect: {
+						id: adviser.id,
+					},
+				},
+			},
 		});
 
 		if (adviser) {
@@ -31,7 +41,6 @@ export default class AdvisersService {
 				adviser,
 			};
 		}
-
 		return {
 			isCreated: false,
 		};

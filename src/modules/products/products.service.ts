@@ -16,18 +16,28 @@ export default class ProductsService {
 	};
 
 	public getProductById = async (productId: number) => {
-		const product: Product | null = await this.prismaService.prisma.product.findUnique({
+		const product: Product | any = await this.prismaService.prisma.product.findUnique({
 			where: {
 				id: Number(productId),
 			},
+			include: {
+				adviser: true,
+			},
 		});
 
-		return product;
+		const user = await this.prismaService.prisma.user.findUnique({
+			where: { id: Number(product.adviser.userId) },
+		});
+
+		return { product, ...user };
 	};
 
 	public createProduct = async (productData: ProductDto) => {
-		const product: Product = await this.prismaService.prisma.product.create({
+		const product: Product | any = await this.prismaService.prisma.product.create({
 			data: productData,
+			include: {
+				adviser: true,
+			},
 		});
 
 		if (product) {

@@ -16,23 +16,30 @@ export default class ProductsService {
 			},
 		});
 
-		await products.map((p: any, idx: any) => {
-			if (p.adviserId !== null) {
-				// const user: any = this.prismaService.prisma.user.findUnique({ where: { id: Number(p.adviser.userId) } });
-				// console.log(user);
+		const productsList = async () => {
+			return Promise.all(
+				await products.map(async (p: any, idx: any) => {
+					if (p.adviserId !== null) {
+						const user: any = await this.prismaService.prisma.user.findUnique({
+							where: { id: Number(p.adviser.userId) },
+						});
 
-				return (products[idx].adviserData = {
-					rating: p.adviser.rating,
-					expertise: p.adviser.expertise,
-					company: p.adviser.company,
-					user: {},
-				});
-			}
+						products[idx].adviserData = {
+							rating: p.adviser.rating,
+							expertise: p.adviser.expertise,
+							company: p.adviser.company,
+							user: user,
+						};
+						return products[idx];
+					} else {
+						products[idx].adviserData = null;
+						return products[idx];
+					}
+				})
+			);
+		};
 
-			return (p.adviserData = null);
-		});
-
-		return products;
+		return productsList().then((d: any) => d);
 	};
 
 	public getProductById = async (productId: number) => {

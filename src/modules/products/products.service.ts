@@ -29,7 +29,26 @@ export default class ProductsService {
 			where: { id: Number(product.adviser.userId) },
 		});
 
-		return { product, ...user };
+		if (user) {
+			// @ts-ignore
+			delete user.id;
+			// @ts-ignore
+			delete user.password;
+			// @ts-ignore
+			delete user.createdAt;
+			// @ts-ignore
+			delete user.updatedAt;
+		}
+
+		return {
+			product,
+			adviser: {
+				rating: product.adviser.rating,
+				expertise: product.adviser.expertise,
+				company: product.adviser.company,
+				...user,
+			},
+		};
 	};
 
 	public createProduct = async (productData: ProductDto) => {

@@ -10,7 +10,27 @@ export default class ProductsService {
 	}
 
 	public getProducts = async (params: any) => {
-		const products: Product[] | [] = await this.prismaService.prisma.product.findMany();
+		const products: Product[] | [] | any = await this.prismaService.prisma.product.findMany({
+			include: {
+				adviser: true,
+			},
+		});
+
+		await products.map((p: any, idx: any) => {
+			if (p.adviserId !== null) {
+				// const user: any = this.prismaService.prisma.user.findUnique({ where: { id: Number(p.adviser.userId) } });
+				// console.log(user);
+
+				return (products[idx].adviserData = {
+					rating: p.adviser.rating,
+					expertise: p.adviser.expertise,
+					company: p.adviser.company,
+					user: {},
+				});
+			}
+
+			return (p.adviserData = null);
+		});
 
 		return products;
 	};

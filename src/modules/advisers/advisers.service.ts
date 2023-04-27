@@ -70,8 +70,16 @@ export default class AdvisersService {
 	public getAdviserConsultations = async () => {
 		const consultations: AdviserConsultationHistory[] | [] = await this.prismaService.prisma.adviserConsultationHistory.findMany({
 			include: {
-				lead: true,
-				adviser: true,
+				lead: {
+					include: {
+						user: true,
+					},
+				},
+				adviser: {
+					include: {
+						user: true,
+					},
+				},
 				product: true,
 			},
 		});

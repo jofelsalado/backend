@@ -16,6 +16,8 @@ interface Consultation {
 	remarks: string;
 	consultationDate: string;
 	productId: number;
+	adviserId: number;
+	leadId: number;
 }
 
 export class AdviserDto implements Partial<Adviser> {
@@ -58,6 +60,10 @@ export class ConsultationDto implements Partial<Consultation> {
 	@IsNotEmpty()
 	@IsInt()
 	adviserId: number;
+
+	@IsNotEmpty()
+	@IsInt()
+	leadId: number;
 
 	@IsNotEmpty()
 	@IsInt()

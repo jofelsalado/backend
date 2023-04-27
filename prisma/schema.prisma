@@ -76,18 +76,19 @@ model Adviser {
 }
 
 model Lead {
-  id                        Int                         @id @default(autoincrement())
-  rating                    String
-  company                   String
-  createdAt                 DateTime                    @default(now())
-  updatedAt                 DateTime                    @updatedAt
-  userId                    Int                         @unique
-  user                      User                        @relation(references: [id], fields: [userId], onDelete: Cascade)
-  leadNotification          LeadNotification[]
-  adviserManageConsultation AdviserManageConsultation[]
-  leadInquiry               LeadInquiry[]
-  leadConsultaionHistory    LeadConsultationHistory[]
-  leadComplaintReport       LeadComplaintReport[]
+  id                         Int                          @id @default(autoincrement())
+  rating                     String
+  company                    String
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
+  userId                     Int                          @unique
+  user                       User                         @relation(references: [id], fields: [userId], onDelete: Cascade)
+  leadNotification           LeadNotification[]
+  adviserManageConsultation  AdviserManageConsultation[]
+  leadInquiry                LeadInquiry[]
+  leadConsultaionHistory     LeadConsultationHistory[]
+  leadComplaintReport        LeadComplaintReport[]
+  adviserConsultationHistory AdviserConsultationHistory[]
 
   @@index([id, userId])
 }
@@ -212,6 +213,8 @@ model AdviserConsultationHistory {
   updatedAt        DateTime @updatedAt
   adviserId        Int
   adviser          Adviser  @relation(references: [id], fields: [adviserId], onDelete: Cascade)
+  leadId           Int
+  lead             Lead     @relation(references: [id], fields: [leadId], onDelete: Cascade)
   productId        Int
   product          Product  @relation(references: [id], fields: [productId], onDelete: Cascade)
 

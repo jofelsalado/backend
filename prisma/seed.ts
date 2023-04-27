@@ -70,6 +70,50 @@ async function main() {
 		],
 	});
 
+	const lead = await prismaService.prisma.lead.create({
+		data: {
+			rating: "N/A",
+			company: "N/A",
+			userId: 2,
+		},
+	});
+
+	const adviser = await prismaService.prisma.adviser.create({
+		data: {
+			rating: "N/A",
+			company: "N/A",
+			expertise: "N/A",
+			credentialLink: "N/A",
+			userId: 2,
+		},
+	});
+
+	await prismaService.prisma.user.update({
+		where: {
+			id: Number(2),
+		},
+		data: {
+			adviser: {
+				connect: {
+					id: lead.id,
+				},
+			},
+		},
+	});
+
+	await prismaService.prisma.user.update({
+		where: {
+			id: Number(3),
+		},
+		data: {
+			adviser: {
+				connect: {
+					id: adviser.id,
+				},
+			},
+		},
+	});
+
 	for (let i = 0; i <= 50; i++) {
 		const sku: string = String(randomString.generate(10)).toUpperCase();
 		await prismaService.prisma.product.create({

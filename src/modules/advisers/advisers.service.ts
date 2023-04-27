@@ -70,6 +70,7 @@ export default class AdvisersService {
 	public getAdviserConsultations = async () => {
 		const consultations: AdviserConsultationHistory[] | [] = await this.prismaService.prisma.adviserConsultationHistory.findMany({
 			include: {
+				lead: true,
 				adviser: true,
 				product: true,
 			},
@@ -83,6 +84,11 @@ export default class AdvisersService {
 			where: {
 				id: Number(consultationId),
 			},
+			include: {
+				lead: true,
+				adviser: true,
+				product: true,
+			},
 		});
 
 		return consultaion;
@@ -92,6 +98,11 @@ export default class AdvisersService {
 		const consultaions: AdviserConsultationHistory[] | [] = await this.prismaService.prisma.adviserConsultationHistory.findMany({
 			where: {
 				adviserId: Number(adviserId),
+			},
+			include: {
+				lead: true,
+				adviser: true,
+				product: true,
 			},
 		});
 
@@ -106,6 +117,7 @@ export default class AdvisersService {
 			include: {
 				product: true,
 				adviser: true,
+				lead: true,
 			},
 		});
 

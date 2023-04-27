@@ -93,8 +93,16 @@ export default class AdvisersService {
 				id: Number(consultationId),
 			},
 			include: {
-				lead: true,
-				adviser: true,
+				lead: {
+					include: {
+						user: true,
+					},
+				},
+				adviser: {
+					include: {
+						user: true,
+					},
+				},
 				product: true,
 			},
 		});
@@ -108,8 +116,16 @@ export default class AdvisersService {
 				adviserId: Number(adviserId),
 			},
 			include: {
-				lead: true,
-				adviser: true,
+				lead: {
+					include: {
+						user: true,
+					},
+				},
+				adviser: {
+					include: {
+						user: true,
+					},
+				},
 				product: true,
 			},
 		});

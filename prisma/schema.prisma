@@ -201,18 +201,19 @@ model AdviserComplaintReport {
 }
 
 model AdviserConsultationHistory {
-  id          Int      @id @default(autoincrement())
-  company     String
-  meetingType String
-  adviserName String
-  type        String
-  fee         String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  adviserId   Int
-  adviser     Adviser  @relation(references: [id], fields: [adviserId], onDelete: Cascade)
-  productId   Int
-  product     Product  @relation(references: [id], fields: [productId], onDelete: Cascade)
+  id               Int      @id @default(autoincrement())
+  company          String
+  meetingType      String
+  type             String
+  fee              String
+  remarks          String
+  consultationDate String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  adviserId        Int
+  adviser          Adviser  @relation(references: [id], fields: [adviserId], onDelete: Cascade)
+  productId        Int
+  product          Product  @relation(references: [id], fields: [productId], onDelete: Cascade)
 
   @@index([id, adviserId, productId])
 }

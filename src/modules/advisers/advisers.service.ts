@@ -1,6 +1,6 @@
-import { Adviser, Product } from "@prisma/client";
+import { Adviser, AdviserConsultationHistory, Product } from "@prisma/client";
 import PrismaService from "./../../services/prisma.service";
-import { AdviserDto } from "./advisers.dto";
+import { AdviserDto, ConsultationDto } from "./advisers.dto";
 
 export default class AdvisersService {
 	private prismaService: PrismaService;
@@ -35,7 +35,7 @@ export default class AdvisersService {
 			},
 		});
 
-		if (adviser) {
+		if (adviser && connectAdviserToUser) {
 			return {
 				isCreated: true,
 				adviser,
@@ -64,6 +64,55 @@ export default class AdvisersService {
 
 		return {
 			isDeleted: false,
+		};
+	};
+
+	public getAdviserConsultations = async () => {
+		const consultations: AdviserConsultationHistory[] | [] = await this.prismaService.prisma.adviserConsultationHistory.findMany();
+
+		return consultations;
+	};
+
+	public getAdviserConsultationById = async (consultationId: number) => {
+		const consultaion = await this.prismaService.prisma.adviserConsultationHistory.findUnique({
+			where: {
+				id: Number(consultationId),
+			},
+		});
+
+		return consultaion;
+	};
+
+	public getAdviserConsultationsByAdviserId = async (adviserId: number) => {
+		const consultaions: AdviserConsultationHistory[] | [] = await this.prismaService.prisma.adviserConsultationHistory.findMany({
+			where: {
+				adviserId: Number(adviserId),
+			},
+		});
+
+		return consultaions;
+	};
+
+	public createAdviserConsultation = async (consultationData: ConsultationDto) => {
+		const consultation: AdviserConsultationHistory = await this.prismaService.prisma.adviserConsultationHistory.create({
+			data: {
+				...consultationData,
+			},
+			include: {
+				product: true,
+				adviser: true,
+			},
+		});
+
+		if (consultation) {
+			return {
+				isCreated: true,
+				consultation,
+			};
+		}
+
+		return {
+			isCreated: false,
 		};
 	};
 }

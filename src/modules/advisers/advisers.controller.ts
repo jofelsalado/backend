@@ -36,7 +36,9 @@ export default class AdvisersController {
 
 	public getConsultationsByAdviserIdHandler = async (request: Request, response: Response) => {
 		try {
-			//
+			const data = await this.advisersService.getAdviserConsultationsByAdviserId(Number(request.params.id));
+
+			return response.status(200).json({ data });
 		} catch (error) {
 			return response.status(500).json({ message: "INTERNAL_SERVER_ERROR" });
 		}

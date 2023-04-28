@@ -44,6 +44,26 @@ export default class AdvisersController {
 		}
 	};
 
+	public updateConsultationByIdHandler = async (request: Request, response: Response) => {
+		try {
+			const requestValidated = await validateDTO(ConsultationDto, request.body);
+
+			if (requestValidated.isError) {
+				return response.status(400).json(requestValidated.errors);
+			}
+
+			const data = await this.advisersService.updateAdviserConsultationById(request.body, Number(request.params.id));
+
+			if (!data) {
+				return response.status(404).json(null);
+			}
+
+			return response.status(200).json({ data });
+		} catch (error) {
+			return response.status(500).json({ message: "INTERNAL_SERVER_ERROR" });
+		}
+	};
+
 	public createConsultationHandler = async (request: Request, response: Response) => {
 		try {
 			const requestValidated = await validateDTO(ConsultationDto, request.body);

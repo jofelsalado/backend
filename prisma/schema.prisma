@@ -208,7 +208,7 @@ model AdviserConsultationHistory {
   type             String
   fee              String
   remarks          String
-  consultationDate String
+  consultationDate String   @unique
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   adviserId        Int

@@ -16,11 +16,8 @@ export default class AuthRouter {
 
 	private setupRoutes(): void {
 		this.router.post("/auth/login", this.authController.loginHandler);
-		this.router.post(
-			"/auth/logout",
-			this.middlewares.use("requireAuthMiddleware"),
-			this.authController.logoutHandler
-		);
+		this.router.post("/auth/logout", this.middlewares.use("requireAuthMiddleware"), this.authController.logoutHandler);
+		this.router.patch("/auth/update-profile/:userId", this.authController.updateAccountHandler);
 	}
 
 	get getRoutes() {

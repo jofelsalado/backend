@@ -3,11 +3,7 @@ import JWTService from "./../services/jwt.service";
 
 const jwtService = new JWTService();
 
-export const requireAuthMiddleware = (
-	request: Request,
-	response: Response,
-	next: NextFunction
-) => {
+export const requireAuthMiddleware = (request: Request, response: Response, next: NextFunction) => {
 	const authHeader = request.headers.authorization;
 
 	if (typeof authHeader === "undefined") {

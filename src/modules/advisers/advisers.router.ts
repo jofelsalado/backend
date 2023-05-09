@@ -17,6 +17,7 @@ export default class AdvisersRouter {
 			.get("/adviser-consultations", this.advisersController.getConsultationsHandler)
 			.post("/adviser-consultations", this.advisersController.createConsultationHandler)
 			.get("/adviser-consultations/:id", this.advisersController.getConsultationByIdHandler)
+			.patch("/adviser-consultations/:id", this.advisersController.updateConsultationByIdHandler)
 			.get("/adviser/:id/consultations-history", this.advisersController.getConsultationsByAdviserIdHandler);
 	}
 

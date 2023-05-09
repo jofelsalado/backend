@@ -133,6 +133,26 @@ export default class AdvisersService {
 		return consultaions;
 	};
 
+	public updateAdviserConsultationById = async (consultationData: ConsultationDto, consultationId: number) => {
+		const consultation: AdviserConsultationHistory = await this.prismaService.prisma.adviserConsultationHistory.update({
+			where: {
+				id: Number(consultationId),
+			},
+			data: { ...consultationData },
+		});
+
+		if (consultation) {
+			return {
+				isUpdated: true,
+				consultation,
+			};
+		}
+
+		return {
+			isUpdated: false,
+		};
+	};
+
 	public createAdviserConsultation = async (consultationData: ConsultationDto) => {
 		const consultation: AdviserConsultationHistory = await this.prismaService.prisma.adviserConsultationHistory.create({
 			data: {

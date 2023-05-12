@@ -201,12 +201,12 @@ export default class AdvisersService {
 			},
 		});
 
-		let averageRatings = 0;
+		let averageRatings: number = 0;
 
-		for (let i = 0; i <= ratings.length; i++) {
-			console.log(ratings[i]);
+		for (let i = 0; i < ratings.length; i++) {
+			averageRatings += Number(ratings[i].rating);
 		}
 
-		return averageRatings;
+		return Number(averageRatings / ratings.length).toFixed(1);
 	};
 }

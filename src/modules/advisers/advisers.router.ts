@@ -18,7 +18,8 @@ export default class AdvisersRouter {
 			.post("/adviser-consultations", this.advisersController.createConsultationHandler)
 			.get("/adviser-consultations/:id", this.advisersController.getConsultationByIdHandler)
 			.patch("/adviser-consultations/:id", this.advisersController.updateConsultationByIdHandler)
-			.get("/adviser/:id/consultations-history", this.advisersController.getConsultationsByAdviserIdHandler);
+			.get("/adviser/:id/consultations-history", this.advisersController.getConsultationsByAdviserIdHandler)
+			.post("/adviser/:id/add-rating", this.advisersController.addAdviserRatingHandler);
 	}
 
 	get getRoutes() {

@@ -91,6 +91,7 @@ export default class AccountsService {
 	};
 
 	public updateAccount = async (accountId: number, accountData: UserDto) => {
+		accountData.password = await hashPassword(accountData.password);
 		const account: User = await this.prismaService.prisma.user.update({
 			where: {
 				id: Number(accountId),

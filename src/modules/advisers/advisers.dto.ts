@@ -69,3 +69,12 @@ export class ConsultationDto implements Partial<Consultation> {
 	@IsInt()
 	productId: number;
 }
+
+export class AdviserRatingDto {
+	@IsNotEmpty()
+	@IsInt()
+	rating: number;
+
+	@IsNotEmpty()
+	feedbackDescription: string;
+}

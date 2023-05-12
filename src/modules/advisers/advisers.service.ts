@@ -1,6 +1,6 @@
-import { Adviser, AdviserConsultationHistory, Product } from "@prisma/client";
+import { Adviser, AdviserConsultationHistory, FeedbackRating, Product } from "@prisma/client";
 import PrismaService from "./../../services/prisma.service";
-import { AdviserDto, ConsultationDto } from "./advisers.dto";
+import { AdviserDto, ConsultationDto, AdviserRatingDto } from "./advisers.dto";
 
 export default class AdvisersService {
 	private prismaService: PrismaService;
@@ -175,5 +175,32 @@ export default class AdvisersService {
 		return {
 			isCreated: false,
 		};
+	};
+
+	public addAdviserRating = async (ratingData: AdviserRatingDto, adviserId: number) => {
+		const rating: FeedbackRating = await this.prismaService.prisma.feedbackRating.create({
+			data: { ...ratingData, adviserId, rating: String(ratingData.rating) },
+		});
+
+		if (rating) {
+			return {
+				isCreated: true,
+				rating,
+			};
+		}
+
+		return {
+			isCreated: false,
+		};
+	};
+
+	public getAdviserAverageRating = async (adviserId: number) => {
+		const ratings: FeedbackRating[] = await this.prismaService.prisma.feedbackRating.findMany({
+			where: {
+				adviserId: Number(adviserId),
+			},
+		});
+
+		return ratings;
 	};
 }

@@ -256,8 +256,8 @@ model FeedbackRating {
   feedbackDescription String
   feedbackDate        DateTime @default(now())
   updatedAt           DateTime @updatedAt
-  userId              Int
-  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  adviserId           Int
+  adviser             User     @relation(fields: [adviserId], references: [id], onDelete: Cascade)
 
-  @@index([id, userId])
+  @@index([id, adviserId])
 }

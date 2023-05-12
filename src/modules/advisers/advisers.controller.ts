@@ -103,6 +103,7 @@ export default class AdvisersController {
 
 			return response.status(200).json({ data });
 		} catch (error) {
+			console.log(error);
 			return response.status(500).json({ message: "INTERNAL_SERVER_ERROR" });
 		}
 	};

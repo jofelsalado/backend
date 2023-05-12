@@ -201,6 +201,12 @@ export default class AdvisersService {
 			},
 		});
 
-		return ratings;
+		let averageRatings = 0;
+
+		for (let i = 0; i <= ratings.length; i++) {
+			console.log(ratings[i]);
+		}
+
+		return averageRatings;
 	};
 }

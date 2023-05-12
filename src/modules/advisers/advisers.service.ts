@@ -178,7 +178,7 @@ export default class AdvisersService {
 	};
 
 	public addAdviserRating = async (ratingData: AdviserRatingDto, adviserId: number) => {
-		const rating: FeedbackRating = await this.prismaService.prisma.feedbackRating.create({
+		const rating: any = await this.prismaService.prisma.feedbackRating.create({
 			data: { ...ratingData, adviserId, rating: String(ratingData.rating) },
 		});
 
